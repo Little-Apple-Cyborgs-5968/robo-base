@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Hours{% endblock %}
+
+{% block content %}
+<h1 class="text-center">Add Hours</h1>
+<form action="{{ url_for('add_entry') }}" method="post" class="mt-4">
+    <div class="mb-3">
+        <label for="date" class="form-label">Date</label>
+        <input type="date" class="form-control" id="date" name="date" required>
+    </div>
+    <div class="mb-3">
+        <label for="hours" class="form-label">Hours</label>
+        <input type="number" class="form-control" id="hours" name="hours" required>
+    </div>
+    <button type="submit" class="btn btn-primary w-100">Add Entry</button>
+</form>
+<a href="{{ url_for('user_dashboard') }}" class="btn btn-secondary w-100 mt-3">Back</a>
+{% endblock %}

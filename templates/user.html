@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Your Hours{% endblock %}
+
+{% block content %}
+<h1 class="text-center">Welcome, {{ full_name }}!</h1>
+<h3 class="text-center">Total Hours: {{ total_hours }}</h3>
+
+<div class="mt-4">
+    <h1 class="text-center">Your Entries:</h1>
+</div>
+
+<table class="table table-striped mt-4">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Hours</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for log in logs %}
+        <tr>
+            <td>{{ log.date }}</td>
+            <td>{{ log.hours }}</td>
+            <td>
+                <a href="{{ url_for('edit_entry', log_id=log.id) }}" class="btn btn-warning btn-sm">Edit</a>
+                <form action="{{ url_for('edit_entry', log_id=log.id) }}" method="post" style="display:inline;"></form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div class="text-center mt-4">
+    <a href="{{ url_for('add_entry') }}" class="btn btn-success w-50">Add Hours</a>
+</div>
+
+<a href="{{ url_for('logout') }}" class="btn btn-danger w-100 mt-3">Logout</a>
+{% endblock %}
