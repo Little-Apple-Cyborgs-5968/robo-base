@@ -11,7 +11,7 @@
     </div>
     <div class="mb-3">
         <label for="hours" class="form-label">Hours</label>
-        <input type="number" class="form-control" id="hours" name="hours" value="{{ entry.hours }}" required>
+        <input type="number" step="0.01" class="form-control" id="hours" name="hours" value="{{ entry.hours }}" required>
     </div>
     <button type="submit" class="btn btn-primary">Save Changes</button>
 </form>
