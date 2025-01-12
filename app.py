@@ -102,7 +102,7 @@ def add_entry():
                 (user_id, date, hours)
             )
         db.commit()
-        flash('Entry added successfully!', 'success')
+        flash('<img src="/static/thumb_robo.png" alt="Success"> Entry added successfully!', 'success')
         return redirect(url_for('user_dashboard'))
 
     return render_template('add_entry.html')
