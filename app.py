@@ -1,3 +1,4 @@
+import datetime
 from flask import Flask, render_template, request, redirect, url_for, session, g, flash
 import psycopg2
 from psycopg2.extras import DictCursor
@@ -85,17 +86,23 @@ def add_entry():
         return redirect(url_for('login'))
 
     if request.method == 'POST':
-        date = request.form['date']
-        hours = request.form['hours']
-        user_id = session['user_id']
+        if 'date' in request.form and 'hours' in request.form:
+            date = request.form['date']
+            hours = request.form['hours']
+            user_id = session['user_id']
 
-        db = get_db()
-        cursor = db.cursor()
-        cursor.execute(
-            'INSERT INTO entries (user_id, date, hours) VALUES (%s, %s, %s)',
-            (user_id, date, hours)
-        )
+            if date > datetime.datetime.now().strftime('%Y-%m-%d'):
+                flash("Please select a valid date! (don't premove hours)", 'danger')
+                return redirect(url_for('add_entry'))
+
+            db = get_db()
+            cursor = db.cursor()
+            cursor.execute(
+                'INSERT INTO entries (user_id, date, hours) VALUES (%s, %s, %s)',
+                (user_id, date, hours)
+            )
         db.commit()
+        flash('Entry added successfully!', 'success')
         return redirect(url_for('user_dashboard'))
 
     return render_template('add_entry.html')
@@ -114,6 +121,10 @@ def edit_entry(log_id):
             date = request.form['date']
             hours = request.form['hours']
 
+            if date > datetime.datetime.now().strftime('%Y-%m-%d'):
+                flash("Please select a valid date! (don't premove hours)", 'danger')
+                return redirect(url_for('edit_entry', log_id=log_id))
+
             cursor.execute(
                 'UPDATE entries SET date = %s, hours = %s WHERE entry_id = %s AND user_id = %s',
                 (date, hours, log_id, session['user_id'])
@@ -123,7 +134,6 @@ def edit_entry(log_id):
             flash('Entry updated successfully!', 'success')
             return redirect(url_for('user_dashboard'))
 
-        # Handle delete request
         if 'delete' in request.form:  # If delete form is submitted
             cursor.execute('DELETE FROM entries WHERE entry_id = %s AND user_id = %s', (log_id, session['user_id']))
             db.commit()
@@ -194,6 +204,11 @@ def log_hours():
 
     date = request.form['date']
     hours = request.form['hours']
+    
+    if date > datetime.now().strftime('%Y-%m-%d'):
+        flash('Please select a valid date!', 'danger')
+        return redirect(url_for('add_entry'))
+    
     db = get_db()
     cursor = db.cursor()
     cursor.execute(
