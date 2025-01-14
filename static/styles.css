@@ -1,35 +1,26 @@
+.hidden {
+    display: none;
+}
+
+.fade-in-out {
+    animation: fadeInOut 2s;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+#thumb-robo {
+    position: fixed; /* Position the image relative to the viewport */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999; /* Ensure it appears over everything */
+}
+
 body {
     font-family: Arial, sans-serif;
     margin: 20px;
-}
-
-h1, h2 {
-    color: #333;
-}
-
-form {
-    margin-bottom: 20px;
-}
-
-label {
-    display: block;
-    margin-top: 10px;
-}
-
-input, button {
-    margin-top: 5px;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-}
-
-th {
-    background-color: #f2f2f2;
 }

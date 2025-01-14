@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Hours Logger{% endblock %}</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}"> <!-- Custom CSS -->
     <style>
         body {
             padding: 20px;
@@ -26,6 +27,14 @@
         {% endwith %}
         {% block content %}{% endblock %}
     </div>
-      
+
+    <img 
+        id="thumb-robo" 
+        src="{{ url_for('static', filename='thumb_robo.png') }}" 
+        alt="Thumb Robo" 
+        class="hidden"
+    >
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
